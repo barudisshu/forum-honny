@@ -6,9 +6,11 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.TimeZone;
 
 /** @author ehcayen */
 @MappedSuperclass
@@ -16,15 +18,18 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public abstract class AuditModel implements Serializable {
-  @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "create_time", nullable = false, updatable = false)
   @CreatedDate
   private LocalDateTime createTime;
 
-  @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "modify_time", nullable = false)
   @LastModifiedDate
   private LocalDateTime modifyTime;
+
+  @PostConstruct
+  public void setTimeZone() {
+    TimeZone.setDefault(TimeZone.getDefault());
+  }
 
   @PrePersist
   protected void onCreate() {
