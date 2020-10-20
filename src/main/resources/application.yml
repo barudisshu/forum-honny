@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:postgresql:forum
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+  thymeleaf:
+    cache: false
+
+  messages:
+    basename: messages/messages
+
+  mvc:
+    static-path-pattern: /resource/**
